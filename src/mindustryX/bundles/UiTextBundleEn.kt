@@ -316,6 +316,7 @@ internal object UiTextBundleEn : UiTextBundle {
         "生成位置:" to "Spawn location:",
         "生成数量:" to "Generate quantity:",
         "生成范围：" to "Spawn range:",
+        "朝向" to "Rotation:",
         "生成队伍:" to "Spawn Team:",
         "电力：" to "Power:",
         "画板" to "Canvas",

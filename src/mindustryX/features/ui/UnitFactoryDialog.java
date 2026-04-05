@@ -53,9 +53,6 @@ public class UnitFactoryDialog extends BaseDialog{
 
     public UnitFactoryDialog(){
         super(i("单位工厂"));
-        getCell(cont).setElement(new ScrollPane(cont));
-        closeOnBack();
-        addCloseButton();
         //Lazy build
         shown(() -> {
             if(cont.hasChildren()) return;
@@ -64,6 +61,8 @@ public class UnitFactoryDialog extends BaseDialog{
     }
 
     private void setup(){
+        addCloseButton();
+        getCell(cont).setElement(new ScrollPane(cont));
         cont.top();
 
         selection = new Table();
@@ -140,9 +139,10 @@ public class UnitFactoryDialog extends BaseDialog{
             settings.add(posTable).padTop(0f).row();
             settings.add(countTable).row();
             settings.table(randDstTable -> {
+                randDstTable.left();
                 randDstTable.add(i("生成范围："));
                 randDstTable.field(Strings.autoFixed(unitRandDst, 3), text -> unitRandDst = Float.parseFloat(text)).valid(Strings::canParsePositiveFloat).tooltip(i("在目标点附近的这个范围内随机生成")).maxTextLength(6).padLeft(4f);
-                randDstTable.add(i("格")).expandX().left();
+                randDstTable.add(i("格"));
             }).row();
             settings.add(itemTable).row();
             settings.add(propertiesTable).row();
@@ -358,6 +358,14 @@ public class UnitFactoryDialog extends BaseDialog{
             shieldTable.add(i("[yellow]护盾："));
             shieldTable.field(Strings.autoFixed(unit.shield, 1), text -> unit.shield = Float.parseFloat(text)).valid(Strings::canParsePositiveFloat).padLeft(4f);
         });
+
+        propertiesTable.row();
+
+        propertiesTable.table(rotTable -> {
+            rotTable.add(i("朝向"));
+            rotTable.field(Strings.autoFixed(spawnUnit.rotation, 1), text -> spawnUnit.rotation = Float.parseFloat(text)).valid(Strings::canParseFloat).padLeft(4f);
+            rotTable.add("°");
+        });
     }
 
     private void rebuildItemTable(Unit unit, Table itemTable){
@@ -367,7 +375,12 @@ public class UnitFactoryDialog extends BaseDialog{
         if(itemCapacity == 0) return;
 
         itemTable.add(i("携带物品:"));
-        itemTable.button(b -> b.image(() -> unit.hasItem() ? unit.item().uiIcon : Icon.noneSmall.getRegion()).size(48f).scaling(Scaling.fit).padLeft(8f), Styles.clearNonei, () -> ContentSelectDialog.once(content.items(), unit.item(), item -> unit.stack.item = item)).size(48f).padLeft(8f);
+        itemTable.button(b -> b.image(() -> unit.hasItem() ? unit.item().uiIcon : Icon.noneSmall.getRegion()).size(48f).scaling(Scaling.fit).padLeft(8f), Styles.clearNonei, () -> {
+            ContentSelectDialog.once(content.items(), unit.item(), item -> {
+                unit.stack.item = item;
+                if(unit.stack.amount == 0) unit.stack.amount = 1;
+            });
+        }).size(48f).padLeft(8f);
 
         itemTable.field("" + unit.stack.amount, text -> unit.stack.amount = Mathf.clamp(Strings.parseInt(text), 0, itemCapacity))
         .update((it) -> it.setText("" + unit.stack.amount)).valid(Strings::canParsePositiveInt).padLeft(8f).expandX().left().width(80);
@@ -415,14 +428,21 @@ public class UnitFactoryDialog extends BaseDialog{
             float[] status = {1f, 1f, 1f, 1f, 1f, 1f, -1f};
 
             for(StatusEntry entry : unitStatus){
-                status[0] *= entry.damageMultiplier;
-                status[1] *= entry.healthMultiplier;
-                status[2] *= entry.speedMultiplier;
-                status[3] *= entry.reloadMultiplier;
-                status[4] *= entry.buildSpeedMultiplier;
-                status[5] *= entry.dragMultiplier;
                 if(entry.effect.dynamic){
+                    status[0] *= entry.damageMultiplier;
+                    status[1] *= entry.healthMultiplier;
+                    status[2] *= entry.speedMultiplier;
+                    status[3] *= entry.reloadMultiplier;
+                    status[4] *= entry.buildSpeedMultiplier;
+                    status[5] *= entry.dragMultiplier;
                     status[6] = entry.armorOverride;
+                }else{
+                    status[0] *= entry.effect.damageMultiplier;
+                    status[1] *= entry.effect.healthMultiplier;
+                    status[2] *= entry.effect.speedMultiplier;
+                    status[3] *= entry.effect.reloadMultiplier;
+                    status[4] *= entry.effect.buildSpeedMultiplier;
+                    status[5] *= entry.effect.dragMultiplier;
                 }
             }
 
@@ -539,7 +559,7 @@ public class UnitFactoryDialog extends BaseDialog{
                         .width(100f);
 
                         bottom.add(i("秒"));
-                        bottom.button(b -> b.add(new FLabel("{rainbow}∞")), Styles.clearNonei, () -> entry.time = Float.POSITIVE_INFINITY)
+                        bottom.button(b -> b.add("∞"), Styles.clearNonei, () -> entry.time = Float.POSITIVE_INFINITY)
                         .size(32f).padLeft(8).expandX().right();
                     }).padTop(8f).expandX().left();
                 }
@@ -708,7 +728,7 @@ public class UnitFactoryDialog extends BaseDialog{
         Table main = new Table();
 
         float width = Math.min(Core.scene.getWidth() * (Core.scene.getWidth() > 700 ? 0.6f : 0.9f) / Scl.scl(), 700);
-        dialog.cont.add(main).width(width).growY();
+        dialog.cont.pane(Styles.noBarPane, main).width(width).growY();
 
         main.top();
         main.defaults().growX();
@@ -747,6 +767,7 @@ public class UnitFactoryDialog extends BaseDialog{
         cloned.shield = unit.shield;
         cloned.stack.set(unit.stack.item, unit.stack.amount);
         cloned.elevation = unit.elevation;
+        cloned.rotation = unit.rotation;
         cloned.set(unit);
 
         if(unit instanceof Payloadc payloadUnit && cloned instanceof Payloadc clonedPayloadUnit){
