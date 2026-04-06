@@ -15,6 +15,7 @@ import mindustry.game.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 import mindustry.ui.dialogs.*;
+import mindustry.world.*;
 import mindustry.world.blocks.logic.*;
 import mindustry.world.blocks.logic.CanvasBlock.*;
 import mindustryX.*;
@@ -24,23 +25,16 @@ import static mindustryX.features.UIExt.i;
 
 //move from mindustry.arcModule.toolpack.picToMindustry
 public class PicToMindustry{
-    static final int[] palette;
-    static final int canvasSize;
+    static CanvasBlock canvasBlock = (CanvasBlock)Blocks.canvas;
+
     static final float[] scaleList = {0.02f, 0.05f, 0.1f, 0.15f, 0.2f, 0.25f, 0.3f, 0.4f, 0.5f, 0.65f, 0.8f, 1f, 1.25f, 1.5f, 2f, 3f, 5f};
     static final String[] disFunList = {i("基础对比"), i("平方对比"), "LAB"};
-
-    static{
-        CanvasBlock canva = (CanvasBlock)Blocks.canvas;
-        palette = canva.palette;
-        canvasSize = canva.canvasSize;
-    }
 
     static Table tTable = new Table();
     static float scale = 1f;
     static int colorDisFun = 0;
     static Pixmap oriImage;
     static Fi originFile;
-
 
     public static void show(){
         Dialog pt = new BaseDialog(i("arc-图片转换器"));
@@ -115,39 +109,63 @@ public class PicToMindustry{
             t.add(formatNumber(scaledW) + "\uE815" + formatNumber(scaledH));
         }).padBottom(20f).row();
         tTable.table(t -> {
-            t.table(tt -> {
-                int w = Mathf.ceil(scaledW * 1f / canvasSize), h = Mathf.ceil(scaledH * 1f / canvasSize);
-                tt.button(VarsX.bundle.labelWithEmoji(i("画板"), Blocks.canvas.emoji()), Styles.cleart, () -> {
-                    Pixmap image = Pixmaps.scale(oriImage, w * canvasSize, h * canvasSize, false);
-                    image.replace((pixel) -> ArraysKt.minByOrThrow(palette, (it) -> diff_rbg(it, pixel)));
-                    Schematic schem = canvasGenerator(image, w, h);
-                    image.dispose();
-                    saveSchem(schem, Blocks.canvas.emoji());
-                }).size(100, 50);
-                tt.add(VarsX.bundle.sizeWithDimensions(String.valueOf(w), String.valueOf(h)));
+            Table exportTable = new Table();
+            t.table(btn -> {
+                for(Block block : content.blocks()){
+                    if(block instanceof CanvasBlock cb){
+                        btn.button(b -> {
+                            b.margin(8f);
+                            b.image(cb.uiIcon).size(iconSmall).pad(4f);
+                            b.add(cb.localizedName).padLeft(8f);
+                        }, Styles.clearTogglei, () -> {
+                            canvasBlock = cb;
+                            rebuildExportTable(exportTable);
+                        }).checked(b -> canvasBlock == cb);
+                    }
+                }
             });
             t.row();
-            t.table(tt -> {
-                int w = Mathf.ceil(scaledW * 1f / canvasSize), h = Mathf.ceil(scaledH * 1f / canvasSize);
-                tt.button(VarsX.bundle.labelWithEmoji(i("画板++"), Blocks.canvas.emoji()), Styles.cleart, () -> {
-                    Pixmap image = Pixmaps.scale(oriImage, w * canvasSize, h * canvasSize, false);
-                    mapPalettePlus(image);
-                    Schematic schem = canvasGenerator(image, w, h);
-                    image.dispose();
-                    saveSchem(schem, Blocks.canvas.emoji());
-                }).size(100, 50);
-                tt.add(VarsX.bundle.sizeWithDimensions(String.valueOf(w), String.valueOf(h)));
-            }).row();
-            t.table(tt -> {
-                tt.button(VarsX.bundle.labelWithEmoji(i("像素画"), Blocks.sorter.emoji()), Styles.cleart, () -> {
-                    Pixmap image = Pixmaps.scale(oriImage, scale);
-                    Schematic schem = sorterGenerator(image);
-                    image.dispose();
-                    saveSchem(schem, Blocks.sorter.emoji());
-                }).size(100, 50);
-                tt.add(VarsX.bundle.sizeWithDimensions(formatNumber(scaledW), formatNumber(scaledH)));
-            }).row();
+            t.add(exportTable);
+            rebuildExportTable(exportTable);
         });
+    }
+
+    private static void rebuildExportTable(Table table){
+        table.clear();
+
+        int scaledW = (int)(oriImage.getWidth() * scale), scaledH = (int)(oriImage.getHeight() * scale);
+        int canvasSize = canvasBlock.canvasSize;
+        int w = Mathf.ceil(scaledW * 1f / canvasSize), h = Mathf.ceil(scaledH * 1f / canvasSize);
+        table.table(tt -> {
+            tt.button(VarsX.bundle.labelWithEmoji(i("画板"), Blocks.canvas.emoji()), Styles.cleart, () -> {
+                Pixmap image = Pixmaps.scale(oriImage, w * canvasSize, h * canvasSize, false);
+                image.replace((pixel) -> ArraysKt.minByOrThrow(canvasBlock.palette, (it) -> diff_rbg(it, pixel)));
+                Schematic schem = canvasGenerator(image, w, h);
+                image.dispose();
+                saveSchem(schem, Blocks.canvas.emoji());
+            }).size(100, 50);
+            tt.add(VarsX.bundle.sizeWithDimensions(String.valueOf(w), String.valueOf(h)));
+        });
+        table.row();
+        table.table(tt -> {
+            tt.button(VarsX.bundle.labelWithEmoji(i("画板++"), Blocks.canvas.emoji()), Styles.cleart, () -> {
+                Pixmap image = Pixmaps.scale(oriImage, w * canvasSize, h * canvasSize, false);
+                mapPalettePlus(image);
+                Schematic schem = canvasGenerator(image, w, h);
+                image.dispose();
+                saveSchem(schem, Blocks.canvas.emoji());
+            }).size(100, 50);
+            tt.add(VarsX.bundle.sizeWithDimensions(String.valueOf(w), String.valueOf(h)));
+        }).row();
+        table.table(tt -> {
+            tt.button(VarsX.bundle.labelWithEmoji(i("像素画"), Blocks.sorter.emoji()), Styles.cleart, () -> {
+                Pixmap image = Pixmaps.scale(oriImage, scale);
+                Schematic schem = sorterGenerator(image);
+                image.dispose();
+                saveSchem(schem, Blocks.sorter.emoji());
+            }).size(100, 50);
+            tt.add(VarsX.bundle.sizeWithDimensions(formatNumber(scaledW), formatNumber(scaledH)));
+        }).row();
     }
 
     private static float diff_rbg(int a, int b){
@@ -177,14 +195,15 @@ public class PicToMindustry{
 
     private static Schematic canvasGenerator(Pixmap image, int w, int h){
         Seq<Schematic.Stile> tiles = new Seq<>();
-        CanvasBuild build = (CanvasBuild)Blocks.canvas.newBuilding();
+        int canvasSize = canvasBlock.canvasSize;
+        CanvasBuild build = (CanvasBuild)canvasBlock.newBuilding();
         for(int y = 0; y < h; y++){
             for(int x = 0; x < w; x++){
                 // get max 12x12 region of the image
                 Pixmap region = image.crop(x * canvasSize, (h - y - 1) * canvasSize, canvasSize, canvasSize);
                 // convert pixel data of the region
                 byte[] bytes = build.packPixmap(region);
-                Schematic.Stile stile = new Schematic.Stile(Blocks.canvas, x * 2, y * 2, bytes, (byte)0);
+                Schematic.Stile stile = new Schematic.Stile(canvasBlock, x * canvasBlock.size, y * canvasBlock.size, bytes, (byte)0);
                 tiles.add(stile);
             }
         }
@@ -230,7 +249,7 @@ public class PicToMindustry{
         for(int y = 0; y < image.height; y++){
             for(int x = 0; x < image.width; x++){
                 RGB pix = new RGB(image.get(x, y));
-                int nearest = ArraysKt.minByOrThrow(palette, (it) -> new RGB(it).sub(pix).pow());
+                int nearest = ArraysKt.minByOrThrow(canvasBlock.palette, (it) -> new RGB(it).sub(pix).pow());
                 image.set(x, y, nearest);
                 pix.sub(new RGB(nearest));
                 if(x + 1 < image.width){
