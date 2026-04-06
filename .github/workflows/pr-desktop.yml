@@ -38,6 +38,11 @@ jobs:
           build-scan-terms-of-use-url: https://gradle.com/help/legal-terms-of-use
           build-scan-terms-of-use-agree: yes
 
+      - name: Set env
+        run: |
+          git config --global user.email "ci@noreply.example.com"
+          git config --global user.name "github_actions"
+
       - name: Prepare sources
         run: |
           git submodule update --init --depth=10
