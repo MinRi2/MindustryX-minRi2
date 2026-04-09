@@ -10,7 +10,7 @@ Subject: [PATCH] HR: RenderExt
  3 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/core/src/mindustry/core/Renderer.java b/core/src/mindustry/core/Renderer.java
-index 701d6ca758f9895b097de5a374b2fa115a779fec..d00829becd3e287433ebf641ea85a38d3c925362 100644
+index a96899173e75f51a23729c06e20839e7915f738c..e6e407293c928d3392bc8eb46ae7b7ef544dbab9 100644
 --- a/core/src/mindustry/core/Renderer.java
 +++ b/core/src/mindustry/core/Renderer.java
 @@ -20,6 +20,7 @@ import mindustry.graphics.g3d.*;
@@ -21,7 +21,7 @@ index 701d6ca758f9895b097de5a374b2fa115a779fec..d00829becd3e287433ebf641ea85a38d
  
  import static arc.Core.*;
  import static mindustry.Vars.*;
-@@ -415,7 +416,7 @@ public class Renderer implements ApplicationListener{
+@@ -414,7 +415,7 @@ public class Renderer implements ApplicationListener{
          Events.fire(Trigger.drawOver);
          blocks.drawBlocks();
  
@@ -52,10 +52,10 @@ index cce0e782176aecc3836e61e035035d22fb5bc379..40637b1e4efcd8359869f2c15bb86c63
                  Draw.z(Layer.block);
  
 diff --git a/core/src/mindustry/input/InputHandler.java b/core/src/mindustry/input/InputHandler.java
-index 1e77e334a742fe6935816311a38f10d1aef934fb..78dcc334c5a6ee933838105432e9f91ca9ddaa0f 100644
+index 9c71c2c58061653945ecdcc655b875c62fcbfb25..fb7840242dfb126c441517984418cf2511dfff21 100644
 --- a/core/src/mindustry/input/InputHandler.java
 +++ b/core/src/mindustry/input/InputHandler.java
-@@ -357,6 +357,11 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
+@@ -355,6 +355,11 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                          ai.group = null;
                      }
  

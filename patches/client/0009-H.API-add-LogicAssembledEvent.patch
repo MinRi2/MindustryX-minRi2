@@ -61,7 +61,7 @@ index 355d311a1c7140e19125ce43dc377b79ddbc3276..4f172c5f66736634dac190b115827695
          @Override
          public void build(Table table){
 diff --git a/core/src/mindustry/world/blocks/logic/LogicBlock.java b/core/src/mindustry/world/blocks/logic/LogicBlock.java
-index fe75cd902f06bb5776696c7e7e0fe46c25002eb1..d7f5d601ed0138a349bda45b02623ccfbfb23914 100644
+index eab91580693a95b493b1ce102ed36dc5ad0f2855..d8a0f2c4f204c8a31e8981fc546f4627dfb12f7c 100644
 --- a/core/src/mindustry/world/blocks/logic/LogicBlock.java
 +++ b/core/src/mindustry/world/blocks/logic/LogicBlock.java
 @@ -1,5 +1,6 @@
@@ -79,7 +79,7 @@ index fe75cd902f06bb5776696c7e7e0fe46c25002eb1..d7f5d601ed0138a349bda45b02623ccf
  
  import java.io.*;
  import java.util.zip.*;
-@@ -403,6 +405,8 @@ public class LogicBlock extends Block{
+@@ -402,6 +404,8 @@ public class LogicBlock extends Block{
                      asm.putConst("@thisx", World.conv(x));
                      asm.putConst("@thisy", World.conv(y));
  

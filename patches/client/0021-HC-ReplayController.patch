@@ -39,7 +39,7 @@ index ad8cb42c3af354a45ebd210533ee6b532aba143e..c7c877530b3e908a1df7bf59c1867f39
          });
  
 diff --git a/core/src/mindustry/io/TypeIO.java b/core/src/mindustry/io/TypeIO.java
-index e04f97ccd666c90fd03b17f5b268a21443886626..9882b8b4a5915265867a29c3a521c89b9cb6624e 100644
+index 730e0d7c960a454161b0d8d6766ed017007e44b7..8d654913ad9f55ae4f10de8a8eff1df03642f7f2 100644
 --- a/core/src/mindustry/io/TypeIO.java
 +++ b/core/src/mindustry/io/TypeIO.java
 @@ -372,7 +372,7 @@ public class TypeIO{
@@ -52,10 +52,10 @@ index e04f97ccd666c90fd03b17f5b268a21443886626..9882b8b4a5915265867a29c3a521c89b
  
      public static void writeUnit(Writes write, Unit unit){
 diff --git a/core/src/mindustry/net/ArcNetProvider.java b/core/src/mindustry/net/ArcNetProvider.java
-index 2efa8a01aedcfc506c8784ace465a835c0d634f5..0db8f792161317bad27f457575112051befe7bef 100644
+index a759e4c791ca7c2b9e9892277738cabdc904e94e..a09af782ccc6f5de444ec3db82e934029d105b58 100644
 --- a/core/src/mindustry/net/ArcNetProvider.java
 +++ b/core/src/mindustry/net/ArcNetProvider.java
-@@ -438,7 +438,7 @@ public class ArcNetProvider implements NetProvider{
+@@ -452,7 +452,7 @@ public class ArcNetProvider implements NetProvider{
              }else{
                  //read length int, followed by compressed lz4 data
                  Packet packet = Net.newPacket(id);
@@ -65,7 +65,7 @@ index 2efa8a01aedcfc506c8784ace465a835c0d634f5..0db8f792161317bad27f457575112051
                  int length = byteBuffer.getShort() & 0xffff;
                  byte compression = byteBuffer.get();
 diff --git a/core/src/mindustry/net/Net.java b/core/src/mindustry/net/Net.java
-index 97591d04f64e11f5c52041de84c6f180ad112596..2c297279bf049fe625f8b1d39d7181a6c2d54d74 100644
+index 7685d7649bdea045e46fa6f4eb9ae93481bae567..7445dfcef7b60d92d310bc999f7f38bf843411e0 100644
 --- a/core/src/mindustry/net/Net.java
 +++ b/core/src/mindustry/net/Net.java
 @@ -11,6 +11,7 @@ import mindustry.gen.*;
@@ -85,7 +85,7 @@ index 97591d04f64e11f5c52041de84c6f180ad112596..2c297279bf049fe625f8b1d39d7181a6
  
      private boolean server;
      private boolean active;
-@@ -305,6 +308,7 @@ public class Net{
+@@ -298,6 +301,7 @@ public class Net{
              int p = object.getPriority();
  
              if(clientLoaded || p == Packet.priorityHigh){
@@ -93,7 +93,7 @@ index 97591d04f64e11f5c52041de84c6f180ad112596..2c297279bf049fe625f8b1d39d7181a6
                  if(clientListeners.get(object.getClass()) != null){
                      clientListeners.get(object.getClass()).get(object);
                  }else{
-@@ -377,7 +381,7 @@ public class Net{
+@@ -370,7 +374,7 @@ public class Net{
       * Whether this is a server or not.
       */
      public boolean server(){

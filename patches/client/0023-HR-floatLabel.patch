@@ -12,7 +12,7 @@ Content-Transfer-Encoding: 8bit
  1 file changed, 7 insertions(+)
 
 diff --git a/core/src/mindustry/ui/fragments/MenuFragment.java b/core/src/mindustry/ui/fragments/MenuFragment.java
-index f72505326509e511e0aa8b6be652f0e59b77209d..6918efaf97843415b3002beabcc1a4a9e0ea8a02 100644
+index e95befc47577387d4ca7612ef3ae08c010ac8874..96e608a82b7951c1792143faf6c1def37348aae6 100644
 --- a/core/src/mindustry/ui/fragments/MenuFragment.java
 +++ b/core/src/mindustry/ui/fragments/MenuFragment.java
 @@ -19,6 +19,7 @@ import mindustry.game.EventType.*;
@@ -40,7 +40,7 @@ index f72505326509e511e0aa8b6be652f0e59b77209d..6918efaf97843415b3002beabcc1a4a9
          parent = group;
  
          parent.fill((x, y, w, h) -> renderer.render());
-@@ -118,6 +122,9 @@ public class MenuFragment{
+@@ -123,6 +127,9 @@ public class MenuFragment{
                  fy -= Scl.scl(macNotchHeight);
              }
  

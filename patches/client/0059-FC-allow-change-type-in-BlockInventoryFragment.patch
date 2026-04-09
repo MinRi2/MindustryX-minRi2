@@ -8,10 +8,10 @@ Subject: [PATCH] FC allow change type in BlockInventoryFragment
  1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/core/src/mindustry/ui/fragments/BlockInventoryFragment.java b/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
-index dc3fefe34cd41290c432965811a6c85f0c5727f5..1813ec8b471e48d3a24cea87be5990c8ff2dea13 100644
+index ff6203979b283c5c0dce8be040a57bfd1ab6e6b4..15df98f82b80216166b20e63de6d88ba9f7c98de 100644
 --- a/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
 +++ b/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
-@@ -72,6 +72,14 @@ public class BlockInventoryFragment{
+@@ -73,6 +73,14 @@ public class BlockInventoryFragment{
      private void takeItem(int requested){
          if(!build.canWithdraw()) return;
  
@@ -26,7 +26,7 @@ index dc3fefe34cd41290c432965811a6c85f0c5727f5..1813ec8b471e48d3a24cea87be5990c8
          //take everything
          int amount = Math.min(requested, player.unit().maxAccepted(lastItem));
  
-@@ -151,8 +159,8 @@ public class BlockInventoryFragment{
+@@ -152,8 +160,8 @@ public class BlockInventoryFragment{
                  if(!build.items.has(item)) continue;
  
                  container.add(i);

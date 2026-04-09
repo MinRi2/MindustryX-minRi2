@@ -80,7 +80,7 @@ index c0016cedfe941e232fd19476ac3268898eb9a981..ea2dfce9c75d30008928909878d31dfa
              netClient.byteStream.setBytes(data);
              DataInputStream input = netClient.dataStream;
 diff --git a/core/src/mindustry/io/TypeIO.java b/core/src/mindustry/io/TypeIO.java
-index 9882b8b4a5915265867a29c3a521c89b9cb6624e..897db2ddc5dcf63bdebfa833291994fa5d2ef477 100644
+index 8d654913ad9f55ae4f10de8a8eff1df03642f7f2..56597768108b4085a125f242feb295b65dcc6ce6 100644
 --- a/core/src/mindustry/io/TypeIO.java
 +++ b/core/src/mindustry/io/TypeIO.java
 @@ -27,6 +27,7 @@ import mindustry.type.*;
@@ -103,7 +103,7 @@ index 9882b8b4a5915265867a29c3a521c89b9cb6624e..897db2ddc5dcf63bdebfa833291994fa
          }else if(object instanceof IntSeq arr){
              if(arr.size > maxArraySize) throw new ArcRuntimeException("Array size too large: " + arr.size);
              write.b((byte)6);
-@@ -446,7 +450,15 @@ public class TypeIO{
+@@ -454,7 +458,15 @@ public class TypeIO{
      }
  
      public static void writeBlock(Writes write, Block block){
@@ -120,7 +120,7 @@ index 9882b8b4a5915265867a29c3a521c89b9cb6624e..897db2ddc5dcf63bdebfa833291994fa
      }
  
      public static Block readBlock(Reads read){
-@@ -510,7 +522,7 @@ public class TypeIO{
+@@ -518,7 +530,7 @@ public class TypeIO{
          write.b(plan.breaking ? (byte)1 : 0);
          write.i(Point2.pack(plan.x, plan.y));
          if(!plan.breaking){
@@ -130,7 +130,7 @@ index 9882b8b4a5915265867a29c3a521c89b9cb6624e..897db2ddc5dcf63bdebfa833291994fa
              boolean writePlan = !headless || !net.server();
              write.b(writePlan ? 1 : 0); //always has config
 diff --git a/core/src/mindustry/net/Net.java b/core/src/mindustry/net/Net.java
-index e35f4e39b7a4c7e02f1e3e578b4159854c3c09a1..42b8b8617b92c7fe8381c9c746729eb4028cb2d1 100644
+index db0f7312670b409c18c6e43ee25776640888a00b..323509e45429dab2d7e479b6f0de9a126f7019b8 100644
 --- a/core/src/mindustry/net/Net.java
 +++ b/core/src/mindustry/net/Net.java
 @@ -1,6 +1,7 @@
@@ -160,7 +160,7 @@ index e35f4e39b7a4c7e02f1e3e578b4159854c3c09a1..42b8b8617b92c7fe8381c9c746729eb4
  import static mindustry.Vars.*;
  
  @SuppressWarnings("unchecked")
-@@ -53,6 +54,15 @@ public class Net{
+@@ -52,6 +53,15 @@ public class Net{
          Call.registerPackets();
      }
  
@@ -176,7 +176,7 @@ index e35f4e39b7a4c7e02f1e3e578b4159854c3c09a1..42b8b8617b92c7fe8381c9c746729eb4
      /** Registers a new packet type for serialization. */
      public static <T extends Packet> void registerPacket(Prov<T> cons){
          packetProvs.add(cons);
-@@ -62,13 +72,24 @@ public class Net{
+@@ -61,13 +71,24 @@ public class Net{
      }
  
      public static byte getPacketId(Packet packet){
@@ -203,7 +203,7 @@ index e35f4e39b7a4c7e02f1e3e578b4159854c3c09a1..42b8b8617b92c7fe8381c9c746729eb4
      }
  
      public Net(NetProvider provider){
-@@ -208,6 +229,7 @@ public class Net{
+@@ -201,6 +222,7 @@ public class Net{
      }
  
      public void disconnect(){
@@ -211,7 +211,7 @@ index e35f4e39b7a4c7e02f1e3e578b4159854c3c09a1..42b8b8617b92c7fe8381c9c746729eb4
          if(active && !server){
              Log.info("Disconnecting.");
          }
-@@ -281,7 +303,13 @@ public class Net{
+@@ -274,7 +296,13 @@ public class Net{
              return;
          }
  
@@ -312,7 +312,7 @@ index 835faba4ef5ca398c4986bba927bcd0bc91bbcf6..122c854ceb29ef6e9dee2f1abbe664d2
              TypeIO.writeString(buffer, locale);
              TypeIO.writeString(buffer, usid);
 diff --git a/core/src/mindustry/ui/dialogs/JoinDialog.java b/core/src/mindustry/ui/dialogs/JoinDialog.java
-index fef21d30db9c61fd17c6fe0390de27b273f9c159..67f3aeadd2975040c975859a394bb4df9c164801 100644
+index 105c34e52221930f2767999c1bf38dfd04f27cd5..a735dc4d29049ba9d2a213f6aa6dc416ca1fb78e 100644
 --- a/core/src/mindustry/ui/dialogs/JoinDialog.java
 +++ b/core/src/mindustry/ui/dialogs/JoinDialog.java
 @@ -642,7 +642,7 @@ public class JoinDialog extends BaseDialog{

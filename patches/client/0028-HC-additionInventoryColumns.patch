@@ -10,10 +10,10 @@ Subject: [PATCH] HC: additionInventoryColumns
  3 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/core/src/mindustry/ui/dialogs/PlanetDialog.java b/core/src/mindustry/ui/dialogs/PlanetDialog.java
-index 8b9174ab1111e83bc14fb6e6e79379140f977075..9726f281e9cd34eff6053dbea7c48129d7226e42 100644
+index a8d281b886f5638c0856dcef68726fa3a2e12cf7..52b4cc43f6ddc449615129aa0816582a07dae61e 100644
 --- a/core/src/mindustry/ui/dialogs/PlanetDialog.java
 +++ b/core/src/mindustry/ui/dialogs/PlanetDialog.java
-@@ -1029,6 +1029,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
+@@ -1030,6 +1030,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
          Table t = new Table().left();
  
          int i = 0;
@@ -21,7 +21,7 @@ index 8b9174ab1111e83bc14fb6e6e79379140f977075..9726f281e9cd34eff6053dbea7c48129
          for(var item : content.items()){
              var stat = stats.get(item);
              if(stat == null) continue;
-@@ -1036,7 +1037,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
+@@ -1037,7 +1038,7 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
              if(total > 1){
                  t.image(item.uiIcon).padRight(3);
                  t.add(UI.formatAmount(total) + " " + Core.bundle.get("unit.perminute")).color(Color.lightGray).padRight(3);
@@ -30,7 +30,7 @@ index 8b9174ab1111e83bc14fb6e6e79379140f977075..9726f281e9cd34eff6053dbea7c48129
                      t.row();
                  }
              }
-@@ -1123,10 +1124,11 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
+@@ -1124,10 +1125,11 @@ public class PlanetDialog extends BaseDialog implements PlanetInterfaceRenderer{
                      t.table(res -> {
  
                          int i = 0;
@@ -44,10 +44,10 @@ index 8b9174ab1111e83bc14fb6e6e79379140f977075..9726f281e9cd34eff6053dbea7c48129
                              }
                          }
 diff --git a/core/src/mindustry/ui/fragments/BlockInventoryFragment.java b/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
-index 54a36cde6eee102c9c8f3bfd5e4c76a2f4d0f1e1..dc3fefe34cd41290c432965811a6c85f0c5727f5 100644
+index ae932d60fac1ad21909257f49144bb61be89da55..ff6203979b283c5c0dce8be040a57bfd1ab6e6b4 100644
 --- a/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
 +++ b/core/src/mindustry/ui/fragments/BlockInventoryFragment.java
-@@ -138,7 +138,7 @@ public class BlockInventoryFragment{
+@@ -139,7 +139,7 @@ public class BlockInventoryFragment{
              }
          });
  

@@ -11,10 +11,10 @@ way-zer <himc.wicp@gmail.com> on 2024/6/9
  android/proguard-rules.pro                    |   4 +
  .../com/github/bsideup/jabel/Desugar.java     |  13 +
  .../javax.annotation.processing.Processor     |   6 +
- build.gradle                                  | 301 +++---------------
+ build.gradle                                  | 297 +++---------------
  core/build.gradle                             |   2 -
  core/build.gradle.kts                         |  67 ++++
- desktop/build.gradle                          | 159 +--------
+ desktop/build.gradle                          | 159 +---------
  gradle.properties                             |   5 +-
  gradlew                                       | 284 ++++++++++-------
  gradlew.bat                                   |  37 ++-
@@ -23,7 +23,7 @@ way-zer <himc.wicp@gmail.com> on 2024/6/9
  settings.gradle                               |  11 +-
  tools/build.gradle                            |  63 ++--
  tools/src/mindustry/tools/Generators.java     |   2 +-
- 17 files changed, 434 insertions(+), 690 deletions(-)
+ 17 files changed, 434 insertions(+), 686 deletions(-)
  create mode 100644 annotations/src/main/java/com/github/bsideup/jabel/Desugar.java
  create mode 100644 annotations/src/main/resources/META-INF/services/javax.annotation.processing.Processor
  delete mode 100644 core/build.gradle
@@ -290,7 +290,7 @@ index 0000000000000000000000000000000000000000..181b87c1d5f3755f16a01c0528d0a89f
 +mindustry.annotations.misc.LogicStatementProcessor
 +mindustry.annotations.remote.RemoteProcess
 diff --git a/build.gradle b/build.gradle
-index ae6b6f7c7ad52ed06e81978923d88ea9e0809fae..5b3ed67fdc80a301be344e2e469b1a2879406bf6 100644
+index 683e27731ac1770971059c0be47c17b20f6d9e08..5b3ed67fdc80a301be344e2e469b1a2879406bf6 100644
 --- a/build.gradle
 +++ b/build.gradle
 @@ -1,29 +1,15 @@
@@ -690,16 +690,7 @@ index ae6b6f7c7ad52ed06e81978923d88ea9e0809fae..5b3ed67fdc80a301be344e2e469b1a28
      }
  }
  
-@@ -473,42 +286,16 @@ configure([":core", ":server"].collect{project(it)}){
-         publications{
-             maven(MavenPublication){
-                 from components.java
--                //TODO: uncomment this once the jitpack packing is fixed (currently depends on a newer glibc version)
--                //if(project.name == "core"){
--                //    artifact(tasks.named("assetsJar"))
--                //}
-             }
-         }
+@@ -478,33 +291,11 @@ configure([":core", ":server"].collect{project(it)}){
      }
  }
  
@@ -1003,18 +994,18 @@ index 0898451c271ed8f75c849d1dc68259c5329dbf35..bbab133446e5eaed169ff0ad31ddf7b8
 +}
 \ No newline at end of file
 diff --git a/gradle.properties b/gradle.properties
-index 41d76817985e9eeb5f70175bafe275e7f70bd87d..a01749009d82d2cb1a20b31e77fc3868b56b163d 100644
+index 8df335e0963ed45ccdc75f1b4584fcb5182109a2..8c025f90530140aa714ba2eeb599554479734023 100644
 --- a/gradle.properties
 +++ b/gradle.properties
 @@ -26,4 +26,7 @@ org.gradle.caching=true
  org.gradle.internal.http.socketTimeout=100000
  org.gradle.internal.http.connectionTimeout=100000
  android.enableR8.fullMode=false
--archash=dfb09c1ce2
-+#archash=dfb09c1ce2
+-archash=50ec671746
++#archash=50ec671746
 +
 +#MDTX: Use "v{upstreamBuild}" by default
-+upstreamBuild=156.2
++upstreamBuild=157
 diff --git a/gradlew b/gradlew
 index 4f906e0c811fc9e230eb44819f509cd0627f2600..f3b75f3b0d4faeb4b1c8a02b5c47007e6efb7dcd 100755
 --- a/gradlew

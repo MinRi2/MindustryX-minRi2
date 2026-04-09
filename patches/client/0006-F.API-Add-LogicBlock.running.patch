@@ -8,7 +8,7 @@ Subject: [PATCH] F.API: Add `LogicBlock.running`
  1 file changed, 5 insertions(+)
 
 diff --git a/core/src/mindustry/world/blocks/logic/LogicBlock.java b/core/src/mindustry/world/blocks/logic/LogicBlock.java
-index 0f879b7a0335d0fc09a47a3a4eb1bb75e40bcf89..fe75cd902f06bb5776696c7e7e0fe46c25002eb1 100644
+index 5ae3fa965fc8246e583c423a5c2acd5d3669bd69..eab91580693a95b493b1ce102ed36dc5ad0f2855 100644
 --- a/core/src/mindustry/world/blocks/logic/LogicBlock.java
 +++ b/core/src/mindustry/world/blocks/logic/LogicBlock.java
 @@ -25,6 +25,7 @@ import mindustry.ui.*;
@@ -28,7 +28,7 @@ index 0f879b7a0335d0fc09a47a3a4eb1bb75e40bcf89..fe75cd902f06bb5776696c7e7e0fe46c
      private static final int maxByteLen = 1024 * 100;
      private static final int maxLinks = 6000;
      public static final int maxNameLength = 32;
-@@ -528,6 +531,7 @@ public class LogicBlock extends Block{
+@@ -527,6 +530,7 @@ public class LogicBlock extends Block{
              if(enabled && executor.initialized()){
                  if(accumulator > maxInstructionScale * ipt) accumulator = maxInstructionScale * ipt;
  
@@ -36,7 +36,7 @@ index 0f879b7a0335d0fc09a47a3a4eb1bb75e40bcf89..fe75cd902f06bb5776696c7e7e0fe46c
                  while(accumulator >= 1f){
                      executor.runOnce();
                      if(executor.yield){
-@@ -536,6 +540,7 @@ public class LogicBlock extends Block{
+@@ -535,6 +539,7 @@ public class LogicBlock extends Block{
                      }
                      accumulator --;
                  }

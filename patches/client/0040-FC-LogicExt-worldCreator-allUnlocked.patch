@@ -80,7 +80,7 @@ index 078026a393a19b36a66577a962f5984310375570..dfc6b9f31bdb9d1f890acc21f4ecca33
      }
  }
 diff --git a/core/src/mindustry/ui/fragments/PlacementFragment.java b/core/src/mindustry/ui/fragments/PlacementFragment.java
-index 722f0a96ded8714d89b128bba97e7fa9aa4975dc..0e70bc703f77e282296a226b39ed73236fd5d694 100644
+index 2564649423f3306dfaaf539dd1021527e65a5a8e..0ba08a4cd621a0081db6487527a98cbab785de4d 100644
 --- a/core/src/mindustry/ui/fragments/PlacementFragment.java
 +++ b/core/src/mindustry/ui/fragments/PlacementFragment.java
 @@ -27,8 +27,10 @@ import mindustry.input.*;
@@ -105,7 +105,7 @@ index 722f0a96ded8714d89b128bba97e7fa9aa4975dc..0e70bc703f77e282296a226b39ed7323
          });
      }
  
-@@ -292,6 +298,7 @@ public class PlacementFragment{
+@@ -293,6 +299,7 @@ public class PlacementFragment{
  
                      for(Block block : getUnlockedByCategory(currentCategory)){
                          if(!unlocked(block)) continue;
@@ -113,7 +113,7 @@ index 722f0a96ded8714d89b128bba97e7fa9aa4975dc..0e70bc703f77e282296a226b39ed7323
                          if(index++ % rowWidth == 0){
                              blockTable.row();
                          }
-@@ -759,7 +766,7 @@ public class PlacementFragment{
+@@ -760,7 +767,7 @@ public class PlacementFragment{
      }
  
      boolean unlocked(Block block){

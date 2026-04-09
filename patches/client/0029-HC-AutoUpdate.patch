@@ -28,7 +28,7 @@ index 7892431374c93cec239a12651197d5a2eddd804c..a8088433306043d2ca7d172040115046
              try{
                  Fi dest = Fi.get(OS.prop("becopy"));
 diff --git a/core/src/mindustry/ui/fragments/MenuFragment.java b/core/src/mindustry/ui/fragments/MenuFragment.java
-index 6918efaf97843415b3002beabcc1a4a9e0ea8a02..90c843267ba9c3c59413a658c9777198296514f5 100644
+index 96e608a82b7951c1792143faf6c1def37348aae6..5509cfb471cd5297a5e5d213b894ab9f85db40c1 100644
 --- a/core/src/mindustry/ui/fragments/MenuFragment.java
 +++ b/core/src/mindustry/ui/fragments/MenuFragment.java
 @@ -19,6 +19,7 @@ import mindustry.game.EventType.*;
@@ -45,17 +45,17 @@ index 6918efaf97843415b3002beabcc1a4a9e0ea8a02..90c843267ba9c3c59413a658c9777198
  
 -        parent.fill(c -> c.bottom().right().button(Icon.discord, new ImageButtonStyle(){{
 -            up = discordBanner;
--        }}, ui.discord::show).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
+-        }}, ui.discord::show).visible(() -> !ui.consolefrag.shown()).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
 +//        parent.fill(c -> c.bottom().right().button(Icon.discord, new ImageButtonStyle(){{
 +//            up = discordBanner;
-+//        }}, ui.discord::show).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
++//        }}, ui.discord::show).visible(() -> !ui.consolefrag.shown()).marginTop(9f).marginLeft(10f).tooltip("@discord").size(84, 45).name("discord"));
  
          //info icon
          if(mobile){
-@@ -94,18 +95,6 @@ public class MenuFragment{
-                 fontColor = Color.white;
-                 up = infoBanner;
-             }}, ui.about::show).size(84, 45).name("info"));
+@@ -99,18 +100,6 @@ public class MenuFragment{
+                     up = infoBanner;
+                 }}, ui.about::show).size(84, 45).visible(() -> !ui.consolefrag.shown()).name("info");
+             });
 -        }else if(becontrol.active()){
 -            parent.fill(c -> c.bottom().right().button("@be.check", Icon.refresh, () -> {
 -                ui.loadfrag.show();

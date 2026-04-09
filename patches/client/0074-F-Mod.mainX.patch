@@ -8,7 +8,7 @@ Subject: [PATCH] F: Mod.mainX
  1 file changed, 9 insertions(+)
 
 diff --git a/core/src/mindustry/mod/Mods.java b/core/src/mindustry/mod/Mods.java
-index 97f87067336497a68e90a11dc439dcd372826ae1..5ecc19770f3d169542bf0016f9d475a1569d3fd9 100644
+index ebf6b5cb066a7d45c5f4caba97892944401cf6a2..77e2a17db2fe233c7253f25df5c2523bad37c8e6 100644
 --- a/core/src/mindustry/mod/Mods.java
 +++ b/core/src/mindustry/mod/Mods.java
 @@ -23,6 +23,7 @@ import mindustry.graphics.MultiPacker.*;
@@ -31,7 +31,7 @@ index 97f87067336497a68e90a11dc439dcd372826ae1..5ecc19770f3d169542bf0016f9d475a1
              String baseName = meta.name.toLowerCase(Locale.ROOT).replace(" ", "-");
  
              var other = mods.find(m -> m.name.equals(baseName));
-@@ -1426,6 +1432,9 @@ public class Mods implements Loadable{
+@@ -1427,6 +1433,9 @@ public class Mods implements Loadable{
          /** Minimum game version that this mod requires, e.g. "140.1" */
          public String minGameVersion = "0";
          public @Nullable String displayName, author, description, subtitle, version, main, repo;

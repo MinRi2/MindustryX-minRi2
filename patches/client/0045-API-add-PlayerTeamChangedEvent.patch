@@ -8,7 +8,7 @@ Subject: [PATCH] API: add PlayerTeamChangedEvent
  1 file changed, 4 insertions(+)
 
 diff --git a/core/src/mindustry/entities/comp/PlayerComp.java b/core/src/mindustry/entities/comp/PlayerComp.java
-index 0703fddd2c37bbcb5e3e62848c087661ddb2fcaf..bdc1814473762dae6ff9a95ccc4c75fef55ffea4 100644
+index 7d0fc94107977c63409fb10076723509b384bee8..fd9d8b2971f0b0528ab2ac6f3dc4a6e63288b94c 100644
 --- a/core/src/mindustry/entities/comp/PlayerComp.java
 +++ b/core/src/mindustry/entities/comp/PlayerComp.java
 @@ -27,6 +27,7 @@ import mindustry.ui.*;

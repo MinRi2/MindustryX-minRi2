@@ -96,7 +96,7 @@ index e1904111c3ca730e830b5c1bac3c1d5cacc6b3d1..e89b8f7fe020fc5d5f1fa444da386762
      }
      processResources.configure {
 diff --git a/core/src/mindustry/Vars.java b/core/src/mindustry/Vars.java
-index bae56deeb25445b764596cbeaafc3bc38c7fc119..d7d3796b701b58afa2d243112c6151bcc96e9351 100644
+index 84064f7739ae6d3049e4f2313a2829a1810e53d2..911e256b3bc8fde56a12da9eaf9493002b239a8c 100644
 --- a/core/src/mindustry/Vars.java
 +++ b/core/src/mindustry/Vars.java
 @@ -90,7 +90,7 @@ public class Vars implements Loadable{

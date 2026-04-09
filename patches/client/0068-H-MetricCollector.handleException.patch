@@ -9,7 +9,7 @@ Subject: [PATCH] H MetricCollector.handleException
  2 files changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/core/src/mindustry/mod/Mods.java b/core/src/mindustry/mod/Mods.java
-index 5f0182b0acd6031ea3dc6199afb6b6ea3c6321ec..97f87067336497a68e90a11dc439dcd372826ae1 100644
+index a9c5f27f09e06f8c160561365dfd9d2ceb3d3c6a..ebf6b5cb066a7d45c5f4caba97892944401cf6a2 100644
 --- a/core/src/mindustry/mod/Mods.java
 +++ b/core/src/mindustry/mod/Mods.java
 @@ -23,6 +23,7 @@ import mindustry.graphics.MultiPacker.*;

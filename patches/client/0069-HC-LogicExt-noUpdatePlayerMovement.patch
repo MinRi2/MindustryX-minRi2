@@ -31,7 +31,7 @@ index 8af9a9faa4d4e5d1246af2f8747cca43567abec8..2f59d642b8203237b7cdc876e6c8fd3a
          }
  
 diff --git a/core/src/mindustry/input/MobileInput.java b/core/src/mindustry/input/MobileInput.java
-index 72d4edb70babfe1fd574a935f2cb5fb4f0538016..c9f5b54a45fa1eeaeac7ca74306e56b603bd1a6e 100644
+index f34727c38d8d158f787e604299920383eab395c9..eced0763f5a5c2e22b9947b5173af744653f7167 100644
 --- a/core/src/mindustry/input/MobileInput.java
 +++ b/core/src/mindustry/input/MobileInput.java
 @@ -24,6 +24,7 @@ import mindustry.type.*;
