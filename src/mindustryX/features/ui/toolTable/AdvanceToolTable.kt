@@ -11,6 +11,7 @@ import mindustry.content.Items
 import mindustry.content.UnitTypes
 import mindustry.editor.MapInfoDialog
 import mindustry.game.Team
+import mindustry.gen.BlockUnitUnit
 import mindustry.gen.Icon
 import mindustry.gen.Iconc
 import mindustry.ui.Styles
@@ -51,7 +52,12 @@ class AdvanceToolTable : Table() {
             }.tooltip(i("清空核心的所有资源"))
             button(UnitTypes.gamma.emoji() + "+", Styles.cleart) {
                 if (Vars.player.dead()) return@button
-                val data = copyIO { Payload.write(UnitPayload(Vars.player.unit()), it) }
+                val unit = Vars.player.unit()
+                if (unit is BlockUnitUnit) {
+                    Vars.ui.showErrorMessage(i("当前单位不能克隆：会生成非法单位并导致崩溃"))
+                    return@button
+                }
+                val data = copyIO { Payload.write(UnitPayload(unit), it) }
                 val cloneUnit = Payload.read<UnitPayload>(data).unit
                 cloneUnit.resetController()
                 cloneUnit.set(Vars.player.x + Mathf.range(8f), Vars.player.y + Mathf.range(8f))
