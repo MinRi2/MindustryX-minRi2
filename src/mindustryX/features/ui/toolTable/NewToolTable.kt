@@ -120,6 +120,10 @@ object NewToolTable : Table() {
             if (content.startsWith("@js ")) {
                 Vars.mods.scripts.runConsole(Vars.ui.consolefrag.injectConsoleVariables() + content.substring(4))
             } else {
+                if(content.length > 140){
+                    Vars.ui.showErrorMessage(i("消息超过聊天长度限制"))
+                    return
+                }
                 Call.sendChatMessage(content)
             }
         }
