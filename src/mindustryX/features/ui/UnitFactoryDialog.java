@@ -1,7 +1,6 @@
 package mindustryX.features.ui;
 
 import arc.*;
-import arc.flabel.*;
 import arc.func.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
@@ -79,11 +78,11 @@ public class UnitFactoryDialog extends BaseDialog{
         setupPosTable();
         rebuildTables();
 
-        buttons.button(i("重置"), Icon.refresh, () -> {
+        buttons.button(i("重置"), Icon.refresh, () -> runSafely(() -> {
             resetUnit(spawnUnit);
             rebuildTables();
-        });
-        buttons.button(i("[orange]生成！"), Icon.modeAttack, this::spawn);
+        }));
+        buttons.button(i("[orange]生成！"), Icon.modeAttack, () -> runSafely(this::spawn));
 
         rebuild();
 
@@ -122,6 +121,15 @@ public class UnitFactoryDialog extends BaseDialog{
             unit.set(pos.add(offset));
 
             unit.add();
+        }
+    }
+
+    private void runSafely(Runnable runnable){
+        try{
+            runnable.run();
+        }catch(Throwable t){
+            Log.err(t);
+            ui.showException(t);
         }
     }
 
@@ -173,7 +181,7 @@ public class UnitFactoryDialog extends BaseDialog{
         rebuildItemTable(spawnUnit, itemTable);
         rebuildTeamTable(spawnUnit, teamTable);
         rebuildEffectsTable(spawnUnit, effectTable);
-        rebuildPayloadTable(spawnUnit, payloadTable);
+        runSafely(() -> rebuildPayloadTable(spawnUnit, payloadTable));
     }
 
     private void setSpawnUnitType(UnitType unitType){
@@ -236,7 +244,7 @@ public class UnitFactoryDialog extends BaseDialog{
             // block单位只会造成崩溃
             if(unit == UnitTypes.block) return;
 
-            table.button(new TextureRegionDrawable(unit.uiIcon), Styles.clearTogglei, 32f, () -> setSpawnUnitType(unit)).margin(3).size(64f).pad(4f).tooltip(unit.localizedName).checked(b -> spawnUnit.type == unit);
+            table.button(new TextureRegionDrawable(unit.uiIcon), Styles.clearTogglei, 32f, () -> runSafely(() -> setSpawnUnitType(unit))).margin(3).size(64f).pad(4f).tooltip(unit.localizedName).checked(b -> spawnUnit.type == unit);
 
             if(++i[0] % rows == 0){
                 table.row();
@@ -550,7 +558,7 @@ public class UnitFactoryDialog extends BaseDialog{
                 }else{
                     t.table(bottom -> {
                         bottom.field("", text -> entry.time = Strings.parseFloat(text) * 60f)
-                        .valid(text -> Strings.canParsePositiveFloat(text.replaceAll("∞", "Infinity")))
+                        .valid(text -> Strings.canParsePositiveFloat(text.replace("∞", "Infinity")))
                         .update(it -> {
                             if(!it.hasKeyboard()){
                                 it.setText(Float.isInfinite(entry.time) ? "∞" : "" + entry.time / 60f);
@@ -640,10 +648,10 @@ public class UnitFactoryDialog extends BaseDialog{
 
             table.image(Blocks.payloadLoader.uiIcon).size(64).scaling(Scaling.fit).expandX().left();
 
-            table.button(Icon.refresh, Styles.cleari, 48f, () -> {
+            table.button(Icon.refresh, Styles.cleari, 48f, () -> runSafely(() -> {
                 payloads.clear();
                 rebuildPayloadSettingTable(payloads, settingTable);
-            }).size(64f).pad(8f);
+            })).size(64f).pad(8f);
 
             table.row();
 
@@ -653,29 +661,29 @@ public class UnitFactoryDialog extends BaseDialog{
                 buttons.button(i("装载建筑"), new TextureRegionDrawable(Blocks.siliconSmelter.uiIcon), Styles.flatt, 32,
                 () -> ContentSelectDialog.once(content.blocks().select(block -> !block.isFloor() && block.buildVisibility != BuildVisibility.hidden),
                 null,
-                block -> {
+                block -> runSafely(() -> {
                     BuildPayload payload = new BuildPayload(block, payloadUnit.team);
                     payloads.add(payload);
                     rebuildPayloadSettingTable(payloads, settingTable);
-                })).row();
+                }))).row();
 
                 buttons.button(i("装载单位"), new TextureRegionDrawable(UnitTypes.alpha.uiIcon), Styles.flatt, 32f,
-                () -> ContentSelectDialog.once(content.units(), null, unitType -> {
+                () -> ContentSelectDialog.once(content.units(), null, unitType -> runSafely(() -> {
                     UnitPayload payload = new UnitPayload(unitType.create(payloadUnit.team));
                     payloads.add(payload);
                     rebuildPayloadSettingTable(payloads, settingTable);
-                })).row();
+                }))).row();
 
-                buttons.button(i("装载自己"), Icon.add, Styles.flatt, () -> {
+                buttons.button(i("装载自己"), Icon.add, Styles.flatt, () -> runSafely(() -> {
                     payloads.add(new UnitPayload(cloneUnit(payloadUnit)));
                     rebuildPayloadSettingTable(payloads, settingTable);
-                }).row();
+                })).row();
             }).pad(8f).colspan(2).fill();
         }).fillY();
 
         payloadTable.pane(Styles.noBarPane, settingTable).grow();
 
-        rebuildPayloadSettingTable(payloads, settingTable);
+        runSafely(() -> rebuildPayloadSettingTable(payloads, settingTable));
     }
 
     private void rebuildPayloadSettingTable(Seq<Payload> payloads, Table table){
@@ -694,21 +702,21 @@ public class UnitFactoryDialog extends BaseDialog{
                 t.defaults().size(32).pad(4f);
 
                 if(payload instanceof UnitPayload unitPayload){
-                    t.button(Icon.editSmall, Styles.clearNonei, 24f, () -> simpleFactory(unitPayload.unit));
+                    t.button(Icon.editSmall, Styles.clearNonei, 24f, () -> runSafely(() -> simpleFactory(unitPayload.unit)));
                 }
 
-                t.button(Icon.copySmall, Styles.clearNonei, 24f, () -> {
+                t.button(Icon.copySmall, Styles.clearNonei, 24f, () -> runSafely(() -> {
                     Payload copied = clonePayload(payload);
                     payloads.add(copied);
 
                     rebuildPayloadSettingTable(payloads, table);
-                });
+                }));
 
-                t.button(Icon.cancelSmall, Styles.clearNonei, 24f, () -> {
+                t.button(Icon.cancelSmall, Styles.clearNonei, 24f, () -> runSafely(() -> {
                     payloads.remove(payload, true);
 
                     rebuildPayloadSettingTable(payloads, table);
-                });
+                }));
             });
 
             if(++i % 2 == 0){
@@ -749,14 +757,14 @@ public class UnitFactoryDialog extends BaseDialog{
             bottomTable.table(effectTable -> rebuildEffectsTable(unit, effectTable)).fillX().row();
 
             bottomTable.defaults().padTop(16f);
-            bottomTable.table(payloadTable -> rebuildPayloadTable(unit, payloadTable)).fillX();
+            bottomTable.table(payloadTable -> runSafely(() -> rebuildPayloadTable(unit, payloadTable))).fillX();
         }).padTop(8f).growY();
 
         dialog.addCloseButton();
-        dialog.buttons.button(i("重置"), Icon.refresh, () -> {
+        dialog.buttons.button(i("重置"), Icon.refresh, () -> runSafely(() -> {
             resetUnit(unit);
             rebuildTables();
-        });
+        }));
 
         dialog.show();
     }
