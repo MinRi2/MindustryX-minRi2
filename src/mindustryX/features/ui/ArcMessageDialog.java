@@ -129,7 +129,9 @@ public class ArcMessageDialog extends BaseDialog{
     void exportMsg(){
         StringBuilder messageHis = new StringBuilder();
         messageHis.append(VarsX.bundle.exportHeader(VarsX.version)).append("\n");
-        messageHis.append(VarsX.bundle.exportMap(state.map.name(), state.rules.modeName));
+        String mode = state.rules.modeName;
+        if(mode == null) mode = state.rules.mode().toString();
+        messageHis.append(VarsX.bundle.exportMap(state.map.name(), mode));
         messageHis.append(VarsX.bundle.currentWave(state.wave)).append("\n");
         messageHis.append(VarsX.bundle.exportCount(msgList.size));
         for(var msg : msgList){
