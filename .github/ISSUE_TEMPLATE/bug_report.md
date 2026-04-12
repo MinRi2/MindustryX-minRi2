@@ -9,7 +9,7 @@ assignees: ''
 
 **Platform**: *The type of device you were playing on - Android/iOS/Mac/Windows/Linux* ("All" is NOT a platform!)
 
-**Build**: *The build number under the title in the main menu. Required. "LATEST" IS NOT A VERSION, I NEED THE EXACT BUILD NUMBER OF YOUR GAME.*
+**Build**: *The exact MindustryX build number under the title in the main menu. Required. "LATEST" IS NOT A VERSION.*
 
 **Issue**: *Explain your issue in detail.*
 
@@ -23,8 +23,11 @@ If you remove the line above without reading it properly and understanding what 
 
 **(Crash) logs**: *Either crash reports from the crash folder, or the file you get when you go into Settings -> Game Data -> Export Crash logs. REQUIRED if you are reporting a crash.*
 
+**Extra context**: *Anything that may help triage this issue: whether it only happens with certain mods, whether a save is required, whether it is reproducible, and whether you suspect bad content / bad save / user input is involved.*
+
 ---
 
 *Place an X (no spaces) between the brackets to confirm that you have read the line below.*  
-- [ ] **I have updated to the latest release (https://github.com/Anuken/Mindustry/releases) to make sure my issue has not been fixed.**
+- [ ] **I have updated to the latest MindustryX release / preview build available to me to make sure my issue has not already been fixed.**
 - [ ] **I have searched the closed and open issues to make sure that this problem has not already been reported.**
+- [ ] **This is a first-time bug report. If the issue is already analyzed / fixed / classified, I should use the Bug Log template instead.**

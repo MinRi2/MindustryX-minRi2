@@ -35,20 +35,28 @@
 
 ### 贡献代码
 1. 初始化项目:
-    * 克隆使用 recursive 选项: `git clone --recursive https://github.com/TinyLake/MindustryX.git`    
-    * 或者在项目目录，执行 `git submodule update --init`
-2. 应用 Patch 文件: 在 MDTX 根目录运行 `./scripts/applyPatches.sh`
-3. 修改并提交: 在 [`work/`](work) 中提交你的代码
-4. 生成 Patch 文件: 在根目录运行 `./scripts/genPatches.sh`
-5. 在 MDTX 根目录里提交 Patch 文件
+    * 克隆使用 recursive 选项: `git clone --recursive https://github.com/TinyLake/MindustryX.git`
+    * 或者在项目目录执行: `git submodule update --init --depth=10`
+2. 应用 Patch 文件: 在 MDTX 根目录运行 `bash ./scripts/applyPatches.sh`
+3. 选择正确修改层:
+    * `work/`：Mindustry 上游展开源码与主要开发位置
+    * `Arc/`：Arc 上游展开源码
+    * 根目录 `src/`、`assets/`、`buildPlugins/`：MindustryX 自有源码与资源/构建逻辑
+4. 修改并提交:
+    * 改动 `work/` / `Arc/` 时，在对应目录内提交源码修改
+    * 改动根目录文件时，在根目录提交
+5. 生成 Patch 文件:
+    * 如果改动触达 `work/` 或 `Arc/`，回到根目录运行 `bash ./scripts/genPatches.sh`
+    * 如果只改根目录 `src/`、`assets/`、`buildPlugins/`、脚本或文档，则不需要单独回生 patch
+6. 在 MDTX 根目录提交生成出的 patch 或根目录改动
 
 ```shell
   git clone --recursive https://github.com/TinyLake/MindustryX.git && cd MindustryX
-  git submodule update --init
+  git submodule update --init --depth=10
   bash ./scripts/applyPatches.sh
-  # Modifiy and commit inside work
+  # Modify and commit inside work/Arc, or commit root-owned files in root
   bash ./scripts/genPatches.sh
-  # Commit outside work, and push. Then you could create PR.
+  # Commit generated patches or other root changes in repository root, then push and open PR.
 ```
 
 有开发能力的可私聊WZ加入开发群
@@ -67,8 +75,9 @@ Like `2024.05.25.238-client-wz` means `{date}.{code}-{branch}`, `code` increment
 See `./patches/`.
 
 ## Contribution
-1. cd `work/` and execute `../scripts/applyPatches`
-2. commit your feature in `work/`, then `../scripts/genPatches.sh` and commit in root.
+1. Run `bash ./scripts/applyPatches.sh` in repository root after submodules are ready.
+2. Make and commit source changes in `work/` / `Arc/`, or commit root-owned files in repository root.
+3. If you changed `work/` or `Arc/`, run `bash ./scripts/genPatches.sh` in repository root, then commit the regenerated patches in root.
 
 ## Star History
 
