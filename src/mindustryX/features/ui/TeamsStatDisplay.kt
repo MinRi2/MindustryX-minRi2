@@ -90,7 +90,7 @@ class TeamsStatDisplay : Table() {
                     image().growX().row()
                     team.players.forEach {
                         add(Table().apply {
-                            image(it.unit()?.type?.uiIcon).size(Vars.iconMed)
+                            image(it.unit()?.type?.uiIcon ?: Icon.units.region).size(Vars.iconMed)
                             add().width(16f)
                             label { it.plainName() }.left().expandX()
                         }).fillX().row()
