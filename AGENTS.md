@@ -97,16 +97,6 @@ gradle --parallel desktop:dist server:dist core:genLoaderModAll android:assemble
 
 - `scripts/updateUpstream.sh` 会 fetch 并 reset `work/`、`Arc/` 到指定上游 ref，然后在根目录提交子模块指针变化，并重新执行 `applyPatches.sh` / `genPatches.sh`；使用前先确认目标 ref、当前工作区状态，以及你是否真的要做一次上游同步。
 
-## 错误日记分析标准
+## 错误分析与遥测
 
-- 这一节的目标不是机械判断“栈里有没有 `mindustryX.*`”，而是从崩溃日志里提炼出真正能推动定位、复现、修复和质量提升的线索。
-- 先看日志是否足够形成有效问题：版本、平台、触发步骤、mod 列表、存档/坏档信息、崩溃日志本体是否齐全；缺这些关键信息时，先标记为“信息不足”，不要过早下结论。
-- 先找真正抛异常的地方，不要只看栈里出现过什么类；要分清“根因”“传播链”和“表层崩点”，不要把最后一帧默认当根因。
-- 分析时先提炼关键信号：异常类型、首个可信抛点、直接触发条件、涉及的数据对象、是否带 mod/坏档/玩家输入/坏内容定义、是否可稳定复现。
-- 先分清“和 MindustryX 真正有关”与“只是经过 MindustryX”。异常根因在 `mindustryX.*`、`mindustryX.*` 是主动功能入口、或 `mindustryX.*` 先制造非法状态随后在 `mindustry.*` 中崩溃时，应优先沿 MindustryX 方向继续分析。
-- 只是经过包装层，如 `RenderExt.onGroupDraw/onBlockDraw`，或只是正常引导链，如 `loader.Main` / `DesktopImpl`，通常不是有效根因线索，不要因为栈里出现过就误判方向。
-- `mindustryX.*` 只是入口转发、包装或正常经过路径，而坏数据明显来自玩家输入、第三方 mod、坏档或坏内容定义时，分析时默认视为噪声，不要优先沿着 MindustryX 方向跟修。
-- 明显属于玩家输入、第三方 mod、坏档或坏内容定义时，分析时默认视为噪声，不要优先投入 MindustryX 修复精力。
-- 同一根因反复报错时，按一类问题归并，不要把重复日志当多个独立 bug；已有 issue 或已修过的问题，不因为日志文本不同就重新拆成新问题。
-- 能直接定位到触发条件的，顺手记下触发条件、影响范围、是否可稳定复现，以及它会阻塞哪类功能；这些信息通常比“栈里出现了哪些类名”更有用。
-- 建议记录格式：异常 / 关键线索 / 可能归属 / 触发条件 / 复现性 / 影响范围 / 状态。
+详见 [docs/error-analysis.md](docs/error-analysis.md)
