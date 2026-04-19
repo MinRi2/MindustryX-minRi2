@@ -15,7 +15,7 @@ Content-Transfer-Encoding: 8bit
  1 file changed, 164 insertions(+), 67 deletions(-)
 
 diff --git a/core/src/mindustry/editor/WaveInfoDialog.java b/core/src/mindustry/editor/WaveInfoDialog.java
-index 21ca2cdd139416d3ff92f1d3fa4f4873ed09f93d..96a9a6698986dcb8080c4c64c6921c8cdd0ef2bb 100644
+index 21ca2cdd139416d3ff92f1d3fa4f4873ed09f93d..699fad00cd1a71c6129e4e0f8fbb376ec223e552 100644
 --- a/core/src/mindustry/editor/WaveInfoDialog.java
 +++ b/core/src/mindustry/editor/WaveInfoDialog.java
 @@ -6,6 +6,7 @@ import arc.graphics.*;
@@ -191,7 +191,7 @@ index 21ca2cdd139416d3ff92f1d3fa4f4873ed09f93d..96a9a6698986dcb8080c4c64c6921c8c
 +                                });
 +                                dialog.show();
 +                            });
-+                            if(group.items != null){
++                            if(group.items != null && group.type.itemCapacity > 0){
 +                                a.label(() -> "x" + group.items.amount);
 +
 +                                a.slider(1, group.type.itemCapacity, 1, (it) -> {
