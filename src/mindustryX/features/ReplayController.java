@@ -196,8 +196,10 @@ public class ReplayController{
             tmpReader.close();
 
             dialog.cont.add(VarsX.bundle.packetCount(packets.size())).row();
-            int secs = (int)(packets.get(packets.size() - 1).getOffset() / 60);
-            dialog.cont.add(VarsX.bundle.playbackLength((secs / 3600) + ":" + (secs / 60 % 60) + ":" + (secs % 60))).row();
+            if(!packets.isEmpty()){
+                int secs = (int)(packets.get(packets.size() - 1).getOffset() / 60);
+                dialog.cont.add(VarsX.bundle.playbackLength((secs / 3600) + ":" + (secs / 60 % 60) + ":" + (secs % 60))).row();
+            }
             dialog.cont.pane(t -> {
                 t.defaults().pad(2);
                 for(var packet : packets){
